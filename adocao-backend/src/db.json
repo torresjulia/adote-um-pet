@@ -1,0 +1,25 @@
+[
+    {
+      "id": 1,
+      "nome": "Tobby",
+      "especie": "Cachorro",
+      "raca": "Labrador",
+      "idade": 3,
+      "porte": "Médio",
+      "descricao": "Muito brincalhão",
+      "foto": "https://placekitten.com/200/200",
+      "status": "disponivel"
+    },
+    {
+      "id": 2,
+      "nome": "Mimi",
+      "especie": "Gato",
+      "raca": "Siamês",
+      "idade": 2,
+      "porte": "Pequeno",
+      "descricao": "Calma e carinhosa",
+      "foto": "https://placekitten.com/201/201",
+      "status": "disponivel"
+    }
+  ]
+  
