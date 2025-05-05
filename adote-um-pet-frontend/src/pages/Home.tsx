@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { fetchPets } from "../services/petService";
 import { Pet } from "../types/pet";
+import PetImage from "../components/PetImage";
 
 const Home: React.FC = () => {
   const [pets, setPets] = useState<Pet[]>([]);
@@ -63,10 +64,10 @@ const Home: React.FC = () => {
             className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300"
           >
             <div className="relative h-48">
-              <img
+              <PetImage
                 src={pet.foto}
                 alt={pet.nome}
-                className="w-full h-full object-cover"
+                className="w-full h-full"
               />
             </div>
             <div className="p-4">

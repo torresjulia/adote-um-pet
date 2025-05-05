@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import { getPetById } from "../services/petService";
 import { Pet } from "../types/pet";
+import PetImage from "../components/PetImage";
 
 const PetDetails: React.FC = () => {
   const { id } = useParams<{ id: string }>();
@@ -79,11 +80,7 @@ const PetDetails: React.FC = () => {
       <div className="bg-white rounded-lg shadow-lg overflow-hidden">
         <div className="md:flex">
           <div className="md:w-1/2">
-            <img
-              src={pet.foto}
-              alt={pet.nome}
-              className="w-full h-full object-cover"
-            />
+            <PetImage src={pet.foto} alt={pet.nome} className="w-full h-full" />
           </div>
 
           <div className="p-8 md:w-1/2">
