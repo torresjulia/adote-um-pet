@@ -1,6 +1,7 @@
 import express, { Request, Response } from "express";
 import cors from "cors";
 import petRoutes from "./routes/petRoutes";
+import authRoutes from "./routes/authRoutes";
 
 const app = express();
 
@@ -22,6 +23,9 @@ app.get("/", (req: Request, res: Response) => {
   res.json({ message: "Bem-vindo à API de Adoção de Pets! 🐾" });
 });
 
+// Rotas de autenticação
+app.use("/auth", authRoutes);
+
 // Rotas de pets
 console.log("Registrando rotas de pets...");
 app.use("/pets", petRoutes);
@@ -39,6 +43,8 @@ app.listen(3000, () => {
   console.log("Servidor rodando em http://localhost:3000");
   console.log("Rotas disponíveis:");
   console.log("GET / - Rota raiz");
+  console.log("POST /auth/register - Registrar novo usuário");
+  console.log("POST /auth/login - Login de usuário");
   console.log("GET /pets - Listar todos os pets");
   console.log("GET /pets/:id - Buscar pet por ID");
   console.log("POST /pets - Criar novo pet");

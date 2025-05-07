@@ -1,9 +1,11 @@
 import React, { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
+import { useAuth } from "../contexts/AuthContext";
 
 const Header: React.FC = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const location = useLocation();
+  const { isAuthenticated, user, logout } = useAuth();
 
   const isActive = (path: string) => {
     return location.pathname === path;
@@ -44,6 +46,33 @@ const Header: React.FC = () => {
                 )}
               </Link>
             ))}
+
+            {isAuthenticated ? (
+              <div className="flex items-center space-x-4">
+                <span className="text-gray-600">Olá, {user?.nome}</span>
+                <button
+                  onClick={logout}
+                  className="text-gray-600 hover:text-blue-600 transition-colors"
+                >
+                  Sair
+                </button>
+              </div>
+            ) : (
+              <div className="flex items-center space-x-4">
+                <Link
+                  to="/login"
+                  className="text-gray-600 hover:text-blue-600 transition-colors"
+                >
+                  Entrar
+                </Link>
+                <Link
+                  to="/register"
+                  className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition-colors"
+                >
+                  Registrar
+                </Link>
+              </div>
+            )}
           </div>
 
           {/* Mobile Menu Button */}
@@ -88,6 +117,33 @@ const Header: React.FC = () => {
                 {link.label}
               </Link>
             ))}
+
+            {isAuthenticated ? (
+              <div className="flex items-center space-x-4">
+                <span className="text-gray-600">Olá, {user?.nome}</span>
+                <button
+                  onClick={logout}
+                  className="text-gray-600 hover:text-blue-600 transition-colors"
+                >
+                  Sair
+                </button>
+              </div>
+            ) : (
+              <div className="flex items-center space-x-4">
+                <Link
+                  to="/login"
+                  className="text-gray-600 hover:text-blue-600 transition-colors"
+                >
+                  Entrar
+                </Link>
+                <Link
+                  to="/register"
+                  className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition-colors"
+                >
+                  Registrar
+                </Link>
+              </div>
+            )}
           </div>
         </div>
       </nav>

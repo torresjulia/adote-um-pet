@@ -1,4 +1,5 @@
 import { Request, Response } from "express";
+import petsData from "../db.json";
 
 interface Pet {
   id: number;
@@ -8,13 +9,18 @@ interface Pet {
   idade: number;
   porte: string;
   descricao: string;
-  fotoUrl: string;
+  foto: string;
   status: string;
 }
 
 export class PetController {
-  private pets: Pet[] = [];
-  private nextId = 1;
+  // Código original
+  // private pets: Pet[] = [];
+  // private nextId = 1;
+
+  // Mock para testes no frontend
+  private pets: Pet[] = petsData;
+  private nextId = Math.max(...this.pets.map((pet) => pet.id)) + 1;
 
   async getAllPets(req: Request, res: Response) {
     try {
