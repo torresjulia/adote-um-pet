@@ -1,27 +1,41 @@
 import express, { Request, Response } from "express";
 import { PetController } from "../controllers/petController";
+import { verifyToken } from "../middlewares/verifyTokens";
+import { isAdmin } from "../middlewares/isAdmin";
 
 const router = express.Router();
 const controller = new PetController();
 
-router.get("/", async (req: Request, res: Response) => {
+// Apenas precisa estar logado
+router.get("/", verifyToken, async (req: Request, res: Response) => {
   await controller.getAllPets(req, res);
 });
 
-router.get("/:id", async (req: Request, res: Response) => {
+router.get("/:id", verifyToken, async (req: Request, res: Response) => {
   await controller.getPetById(req, res);
 });
 
-router.post("/", async (req: Request, res: Response) => {
+// Precisa estar logado E ser admin
+router.post("/", verifyToken, isAdmin, async (req: Request, res: Response) => {
   await controller.createPet(req, res);
 });
 
-router.put("/:id", async (req: Request, res: Response) => {
-  await controller.updatePet(req, res);
-});
+router.put(
+  "/:id",
+  verifyToken,
+  isAdmin,
+  async (req: Request, res: Response) => {
+    await controller.updatePet(req, res);
+  }
+);
 
-router.delete("/:id", async (req: Request, res: Response) => {
-  await controller.deletePet(req, res);
-});
+router.delete(
+  "/:id",
+  verifyToken,
+  isAdmin,
+  async (req: Request, res: Response) => {
+    await controller.deletePet(req, res);
+  }
+);
 
 export default router;

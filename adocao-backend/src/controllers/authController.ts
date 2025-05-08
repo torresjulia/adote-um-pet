@@ -1,7 +1,9 @@
-import { Request, Response } from "express";
+// import { Request, Response } from "express";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import { User } from "../models/User";
+import { Request, Response } from "express-serve-static-core";
+import { ParsedQs } from "qs";
 
 const JWT_SECRET = process.env.JWT_SECRET || "sua_chave_secreta";
 
@@ -31,6 +33,7 @@ export class AuthController {
         telefone,
         endereco,
         tipo,
+        role: "user", // ou "admin" se você quiser promover manualmente algum
         createdAt: new Date(),
         updatedAt: new Date(),
       };
@@ -39,7 +42,7 @@ export class AuthController {
 
       // Gera o token JWT
       const token = jwt.sign(
-        { userId: newUser.id, email: newUser.email, tipo: newUser.tipo },
+        { id: newUser.id, email: newUser.email, role: newUser.role },
         JWT_SECRET,
         { expiresIn: "24h" }
       );
@@ -71,7 +74,7 @@ export class AuthController {
 
       // Gera o token JWT
       const token = jwt.sign(
-        { userId: user.id, email: user.email, tipo: user.tipo },
+        { id: user.id, email: user.email, role: user.role },
         JWT_SECRET,
         { expiresIn: "24h" }
       );
@@ -83,5 +86,18 @@ export class AuthController {
       console.error("Erro ao fazer login:", error);
       res.status(500).json({ message: "Erro ao fazer login", error });
     }
+  }
+
+  // Promover usuário para "admin" manualmente (temporariamente)
+  promoteToAdmin(req: Request, res: Response) {
+    const { email } = req.body;
+
+    const user = this.users.find((u) => u.email === email);
+    if (!user) {
+      return res.status(404).json({ message: "Usuário não encontrado." });
+    }
+
+    user.role = "admin";
+    return res.json({ message: "Usuário promovido a admin", user });
   }
 }

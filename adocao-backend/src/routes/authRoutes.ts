@@ -12,4 +12,6 @@ router.post("/login", async (req, res) => {
   await controller.login(req, res);
 });
 
+router.post("/promote", (req, res) => controller.promoteToAdmin(req, res));
+
 export default router;
