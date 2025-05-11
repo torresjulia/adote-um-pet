@@ -2,6 +2,7 @@ import express, { Request, Response } from "express";
 import cors from "cors";
 import petRoutes from "./routes/petRoutes";
 import authRoutes from "./routes/authRoutes";
+import uploadRoutes from "./routes/uploadRoutes";
 
 const app = express();
 
@@ -30,6 +31,9 @@ app.use("/auth", authRoutes);
 console.log("Registrando rotas de pets...");
 app.use("/pets", petRoutes);
 
+//Roda de upload
+app.use("/upload", uploadRoutes);
+
 // Middleware de erro
 app.use((err: any, req: Request, res: Response, next: any) => {
   console.error("Erro:", err);
@@ -50,4 +54,7 @@ app.listen(3000, () => {
   console.log("POST /pets - Criar novo pet");
   console.log("PUT /pets/:id - Atualizar pet");
   console.log("DELETE /pets/:id - Deletar pet");
+  console.log(
+    "POST /upload/pets/:petId/images - Upload de imagens para um pet"
+  );
 });
